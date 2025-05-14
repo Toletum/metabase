@@ -1,0 +1,13 @@
+FROM ubuntu
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt update && apt upgrade -y && apt install -y \
+  openjdk-11-jdk \
+  git \
+  curl \
+  vim \
+  && apt clean
+
+CMD ["sleep", "infinity"]
+

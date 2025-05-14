@@ -1,0 +1,23 @@
+FROM dev-jcs
+
+#RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
+    apt install -y nodejs leiningen  && \
+    npm install -g yarn && \
+    apt clean
+
+
+RUN curl -L https://github.com/clojure/brew-install/releases/latest/download/linux-install.sh | bash -
+
+ENV NODE_OPTIONS=--openssl-legacy-provider
+ENV NODE_ENV=oss
+
+
+WORKDIR /build
+#RUN git clone --branch v0.48.8 https://github.com/metabase/metabase.git .
+RUN git clone --branch v1.37.0.2 https://github.com/metabase/metabase.git .
+RUN yarn && yarn build
+
+EXPOSE 3000
+CMD ["sleep", "infinity"]
+
